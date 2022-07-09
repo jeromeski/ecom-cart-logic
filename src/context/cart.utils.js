@@ -1,7 +1,9 @@
+// import _ from "lodash";
 const noOp = () => {};
 
 const addItemQuantity = (items, item, qty) => {
   const itemIdx = items.findIndex((c) => c.id === item.id);
+
   const newItems = [
     // get index 0 - itemIdx
     ...items.slice(0, itemIdx),
@@ -9,6 +11,7 @@ const addItemQuantity = (items, item, qty) => {
     { ...items[itemIdx], qty: items[itemIdx].qty + qty },
     ...items.slice(itemIdx + 1)
   ];
+
   return newItems;
 };
 

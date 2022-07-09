@@ -15,13 +15,12 @@ const getNewItemsWithTotals = (items) => {
 };
 
 const removeItemQuantity = (items, product, qty) => {
-  if (qty === 0) {
-    const itemIdx = items.findIndex((c) => c.id === product.id);
+  const itemIdx = items.findIndex((c) => c.id === product.id);
+  if (items[itemIdx].qty <= 1) {
     const newItems = [...items];
-    newItems[itemIdx].qty = 1;
+    newItems[itemIdx].qty = qty;
     return newItems;
   }
-  const itemIdx = items.findIndex((c) => c.id === product.id);
   const newItems = [...items];
   newItems[itemIdx].qty -= 1;
   return newItems;

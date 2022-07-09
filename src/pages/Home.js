@@ -1,18 +1,19 @@
 import React from "react";
+import CartItem from "../components/cart-item";
+import Debug from "../components/debug";
+import ProductItem from "../components/product-item";
 import { useCart } from "../context/cart.context";
 
 const Home = ({ fruits }) => {
   const {
     items,
-    uniqueItemsCount,
-    grandTotal,
     addItem,
     delItem,
     incQty,
     decQty,
-    isEmpty
+    isEmpty,
+    isInCartHandler
   } = useCart();
-  console.log(items);
   return (
     <React.Fragment>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -20,18 +21,12 @@ const Home = ({ fruits }) => {
           <div className="products-feed">
             {fruits.map((item) => {
               return (
-                <div key={item.id} style={{ marginBottom: "1rem" }}>
-                  <span style={{ width: "60px", display: "inline-block" }}>
-                    <b>{item.name}</b>
-                  </span>
-                  &nbsp;
-                  <span
-                    style={{ display: "inline-block", marginRight: "1rem" }}
-                  >
-                    {item.fruit}
-                  </span>
-                  <button onClick={() => addItem(item)}>Add</button>
-                </div>
+                <ProductItem
+                  item={item}
+                  isInCartHandler={isInCartHandler}
+                  addItem={addItem}
+                  key={item.id}
+                />
               );
             })}
           </div>
@@ -39,42 +34,27 @@ const Home = ({ fruits }) => {
           <hr />
           <br />
           <div className="cart">
-            {items.map((item) => {
-              return (
-                <div key={item.id} style={{ marginBottom: "1rem" }}>
-                  <button
-                    style={{ marginRight: "1rem" }}
-                    onClick={() => delItem(item)}
-                  >
-                    x
-                  </button>
-                  <span style={{ width: "60px", display: "inline-block" }}>
-                    <b>{item.name}</b>
-                  </span>
-                  &nbsp;
-                  <span
-                    style={{ display: "inline-block", marginRight: "1rem" }}
-                  >
-                    {item.fruit}
-                  </span>
-                  <button onClick={() => incQty(item, 1)}>+</button>
-                  <input
-                    style={{ width: "5%" }}
-                    type="text"
-                    readOnly
-                    value={item.qty}
-                  />
-                  <button onClick={() => decQty(item, 1)}>-</button>
-                </div>
-              );
-            })}
+            {isEmpty ? (
+              <p>No items in the cart.</p>
+            ) : (
+              <div>
+                {items.map((item) => {
+                  return (
+                    <CartItem
+                      item={item}
+                      key={item.id}
+                      incQty={incQty}
+                      decQty={decQty}
+                      delItem={delItem}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
         <div>
-          <pre>items: {JSON.stringify(items, null, 2)}</pre>
-          <pre>uniqueItems: {JSON.stringify(uniqueItemsCount)}</pre>
-          <pre>isEmpty: {JSON.stringify(isEmpty)}</pre>
-          <pre>grandTotal: {JSON.stringify(grandTotal)}</pre>
+          <Debug />
         </div>
       </div>
     </React.Fragment>

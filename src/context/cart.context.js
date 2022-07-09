@@ -13,12 +13,15 @@ import { useLocalStorage } from "react-use";
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
+  // upload state in local storage
   const [savedCart, saveCart] = useLocalStorage(
     `cart`,
     JSON.stringify(INITIAL_STATE)
   );
+  // use local storage data to populate selected cart items
   const [state, dispatch] = useReducer(cartReducer, JSON.parse(savedCart));
-  console.log(state);
+
+  // update local storage everytime there is change in cart
   useEffect(() => {
     saveCart(JSON.stringify(state));
   }, [state, saveCart]);
@@ -53,8 +56,12 @@ const CartProvider = ({ children }) => {
     });
   };
 
+  const isInCartHandler = (id) => {
+    return state.items.some((i) => i.id === id);
+  };
+
   const values = useMemo(
-    () => ({ ...state, incQty, decQty, delItem, addItem }),
+    () => ({ ...state, incQty, decQty, delItem, addItem, isInCartHandler }),
     [state]
   );
 

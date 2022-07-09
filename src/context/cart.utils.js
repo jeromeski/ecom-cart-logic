@@ -2,16 +2,14 @@ const noOp = () => {};
 
 const addItemQuantity = (items, item, qty) => {
   const itemIdx = items.findIndex((c) => c.id === item.id);
-  const newItems = [...items];
-  newItems[itemIdx].qty += qty;
+  const newItems = [
+    // get index 0 - itemIdx
+    ...items.slice(0, itemIdx),
+    // get target item while not changing other items and append target with new qty
+    { ...items[itemIdx], qty: items[itemIdx].qty + qty },
+    ...items.slice(itemIdx + 1)
+  ];
   return newItems;
-};
-
-const getNewItemsWithTotals = (items) => {
-  return items.map((item) => ({
-    ...item,
-    itemTotal: item.price * item.qty
-  }));
 };
 
 const removeItemQuantity = (items, product, qty) => {
@@ -21,9 +19,19 @@ const removeItemQuantity = (items, product, qty) => {
     newItems[itemIdx].qty = qty;
     return newItems;
   }
-  const newItems = [...items];
-  newItems[itemIdx].qty -= 1;
+  const newItems = [
+    ...items.slice(0, itemIdx),
+    { ...items[itemIdx], qty: items[itemIdx].qty - qty },
+    ...items.slice(itemIdx + 1)
+  ];
   return newItems;
+};
+
+const getNewItemsWithTotals = (items) => {
+  return items.map((item) => ({
+    ...item,
+    itemTotal: item.price * item.qty
+  }));
 };
 
 const removeItemFromCart = (items, product) => {

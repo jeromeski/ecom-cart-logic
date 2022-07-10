@@ -4,7 +4,13 @@ import CheckoutItem from "components/checkout-item";
 import React, { useEffect } from "react";
 
 const Checkout = () => {
-  const { items, itemsTotalCount, grandTotal, isEmpty } = useCart();
+  const {
+    items,
+    itemsTotalCount,
+    grandTotal,
+    isEmpty,
+    totalShippingFee
+  } = useCart();
   const navigate = useNavigate();
   useEffect(() => {
     if (isEmpty) {
@@ -13,12 +19,11 @@ const Checkout = () => {
   }, [isEmpty]);
   return (
     <React.Fragment>
+      <span>
+        <Link to="/"> Home </Link>/Checkout
+      </span>
       <div className="row">
         <div className="col-2">
-          <span>
-            <Link to="/"> Home </Link>/Checkout
-          </span>
-
           {items ? (
             items.map((item) => <CheckoutItem key={item.id} item={item} />)
           ) : (
@@ -26,26 +31,31 @@ const Checkout = () => {
           )}
         </div>
         <div className="col-2">
-          <p>
-            <u>Order Summary</u>
-          </p>
-          <div className="order-summary-container">
-            <div className="order-subtotal">
-              <div>SubTotal ({itemsTotalCount} items)</div>
-              <div>${grandTotal}.00</div>
-            </div>
-            <div className="order-shipping">
-              <div>Shipping Fee:</div> <div>10.00</div>
-            </div>
-            <div className="order-promo">
-              <div>Promotion:</div> <div>-5.00</div>
-            </div>
-            <p className="order-grandTotal">
-              <span>Total</span>{" "}
-              <span>{/* <b>${item.itemTotal + 10 - 5}.00</b> */}</span>
+          <div>
+            <p>
+              <u>Order Summary</u>
             </p>
+            <div className="order-summary-container">
+              <div className="order-subtotal">
+                <span>SubTotal ({itemsTotalCount} items)</span>
+                <span>${grandTotal}.00</span>
+              </div>
+              <div className="order-shipping">
+                <span>Shipping Fee:</span>
+                <span>&nbsp;&nbsp;{totalShippingFee}.00</span>
+              </div>
+              {/* <div className="order-promo">
+                <div>Promotion:</div> <div>-5.00</div>
+              </div> */}
+              <p className="order-grandTotal">
+                <span>Total</span>{" "}
+                <span>
+                  <b>${grandTotal + totalShippingFee}.00</b>
+                </span>
+              </p>
+            </div>
+            <button>PLACE ORDER NOW</button>
           </div>
-          <button>PLACE ORDER NOW</button>
         </div>
       </div>
     </React.Fragment>

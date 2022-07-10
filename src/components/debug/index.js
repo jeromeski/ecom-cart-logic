@@ -7,7 +7,8 @@ const Debug = () => {
     uniqueItemsCount,
     isEmpty,
     itemsTotalCount,
-    grandTotal
+    grandTotal,
+    totalShippingFee
   } = useCart();
   return (
     <React.Fragment>
@@ -16,6 +17,7 @@ const Debug = () => {
       <pre>isEmpty: {JSON.stringify(isEmpty)}</pre>
       <pre>itemsTotalCount : {JSON.stringify(itemsTotalCount)}</pre>
       <pre>grandTotal: {JSON.stringify(grandTotal)}</pre>
+      <pre>totalShippingFee: {JSON.stringify(totalShippingFee)}</pre>
     </React.Fragment>
   );
 };

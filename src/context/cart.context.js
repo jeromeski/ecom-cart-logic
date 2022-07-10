@@ -66,8 +66,23 @@ const CartProvider = ({ children }) => {
     return state.items.some((i) => i.id === id);
   };
 
+  const applyVoucher = (item) => {
+    dispatch({
+      type: "APPLY_VOUCHER",
+      item
+    });
+  };
+
   const values = useMemo(
-    () => ({ ...state, incQty, decQty, delItem, addItem, isInCartHandler }),
+    () => ({
+      ...state,
+      incQty,
+      decQty,
+      delItem,
+      addItem,
+      isInCartHandler,
+      applyVoucher
+    }),
     // eslint-disable-next-line
     [state]
   );

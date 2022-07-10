@@ -2,6 +2,10 @@ body {
   font-family: sans-serif;
 }
 
+.checkout-item {
+  margin-bottom: 1rem;
+}
+
 .checkout-item-container {
   display: flex;
   align-items: center;
@@ -35,17 +39,34 @@ body {
 }
 .col-2 {
   width: 50%;
+  max-width: 100%;
   position: relative;
   padding: 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+}
+
+.col-2 div {
+  width: 100%;
+}
+
+.order-summary {
+  width: 100%;
 }
 
 .order-summary-container {
-  max-width: 70%;
+  width: 100%;
 }
 
 .order-subtotal {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+}
+
+.order-summary-container > span {
+  display: inline-block;
 }
 
 .order-shipping {

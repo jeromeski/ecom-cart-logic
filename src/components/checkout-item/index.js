@@ -3,19 +3,19 @@ import React from "react";
 import { CgTrash } from "react-icons/cg";
 
 const CheckoutItem = ({ item }) => {
-  const { items, delItem, itemsTotalCount, grandTotal } = useCart();
+  const { items, delItem, applyVoucher } = useCart();
 
   const packageId = items.findIndex((i) => item.id === i.id);
 
   return (
-    <div className="row">
-      <div className="col-2">
-        <p>
-          <u>
-            Package {packageId + 1} of {item.qty}
-          </u>
-        </p>{" "}
-        {item && (
+    <div className="checkout-item">
+      <p>
+        <u>
+          Package {packageId + 1} of {item.qty}
+        </u>
+      </p>{" "}
+      {item && (
+        <React.Fragment>
           <div style={{ marginBottom: "1rem" }}>
             <span style={{ display: "inline-block", marginRight: "1rem" }}>
               {item.fruit}
@@ -24,7 +24,7 @@ const CheckoutItem = ({ item }) => {
               <b>{item.name}</b>
             </span>
             &nbsp;
-            <span>${item.price}.00</span>
+            <span>${item.listPrice}.00</span>
             <span className="checkout-item-button-container">
               <button
                 className="checkout-item-button"
@@ -35,8 +35,13 @@ const CheckoutItem = ({ item }) => {
             </span>
             <span className="checkout-item-qty">Qty: {item.qty}</span>
           </div>
-        )}
-      </div>
+          <button disabled={0} onClick={() => applyVoucher(item)}>
+            Apply Voucher
+          </button>
+          <pre>{JSON.stringify(item.isVoucher, 2, null)}</pre>
+        </React.Fragment>
+      )}
+      <hr />
     </div>
   );
 };

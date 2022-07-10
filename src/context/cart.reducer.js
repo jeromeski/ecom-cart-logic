@@ -9,7 +9,8 @@ import {
   removeItemFromCart,
   addItemToCart,
   calculateUniqueItems,
-  getTotalShippingFee
+  getTotalShippingFee,
+  applyVoucherToItem
 } from "./cart.utils";
 
 const INITIAL_STATE = {
@@ -40,6 +41,11 @@ const cartReducer = (state, action) => {
       const items = addItemToCart(state.items, action.item);
       return !items ? state : generateFinalState(state, items);
     }
+
+    case "APPLY_VOUCHER": {
+      const items = applyVoucherToItem(state.items, action.item);
+      return generateFinalState(state, items);
+    }
     default:
       return state;
   }
@@ -49,7 +55,7 @@ const generateFinalState = (state, items) => {
   const uniqueItemsCount = calculateUniqueItems(items);
 
   return {
-    ...state,
+    ...JSON.parse(JSON.stringify(state)),
     items: getNewItemsWithTotals(items),
     itemsTotalCount: getItemsAggregateCount(items),
     uniqueItemsCount,

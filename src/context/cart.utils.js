@@ -31,10 +31,18 @@ const removeItemQuantity = (items, product, qty) => {
 };
 
 const getNewItemsWithTotals = (items) => {
-  return items.map((item) => ({
-    ...item,
-    itemTotal: item.listPrice * item.qty
-  }));
+  return items.map((item) => {
+    if (item.isVoucher) {
+      return {
+        ...item,
+        itemTotal: item.salesPrice * item.qty
+      };
+    }
+    return {
+      ...item,
+      itemTotal: item.listPrice * item.qty
+    };
+  });
 };
 
 const removeItemFromCart = (items, product) => {
@@ -68,6 +76,18 @@ const getGrandTotal = (items) => {
 
 const calculateUniqueItems = (items) => items.length;
 
+const applyVoucherToItem = (items, product) => {
+  console.log("Fired!");
+  const itemIdx = items.findIndex((c) => c.id === product.id);
+  // update state
+  const newItems = [
+    ...items.slice(0, itemIdx),
+    { ...items[itemIdx], isVoucher: true },
+    ...items.slice(itemIdx + 1)
+  ];
+  return newItems;
+};
+
 const getTotalShippingFee = (items) => {
   return items.reduce(function (total, item) {
     return total + item.shipping;
@@ -83,5 +103,6 @@ export {
   removeItemFromCart,
   addItemToCart,
   calculateUniqueItems,
-  getTotalShippingFee
+  getTotalShippingFee,
+  applyVoucherToItem
 };

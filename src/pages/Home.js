@@ -2,9 +2,13 @@ import React from "react";
 import CartItem from "../components/cart-item";
 import Debug from "../components/debug";
 import ProductItem from "../components/product-item";
+import { useAxios } from "hooks/use-axios";
 import { useCart } from "../context/cart.context";
+import { useNavigate } from "react-router-dom";
 
-const Home = ({ fruits }) => {
+const Home = () => {
+  const data = useAxios();
+  const navigate = useNavigate();
   const {
     items,
     addItem,
@@ -14,12 +18,16 @@ const Home = ({ fruits }) => {
     isEmpty,
     isInCartHandler
   } = useCart();
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
   return (
     <React.Fragment>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <div>
           <div className="products-feed">
-            {fruits.map((item) => {
+            {data.map((item) => {
               return (
                 <ProductItem
                   item={item}
@@ -51,6 +59,7 @@ const Home = ({ fruits }) => {
                 })}
               </div>
             )}
+            {!isEmpty && <button onClick={handleCheckout}>Checkout</button>}
           </div>
         </div>
         <div>

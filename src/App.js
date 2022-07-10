@@ -1,12 +1,17 @@
 import CartProvider from "./context/cart.context";
 import Home from "./pages/Home";
+import Checkout from "pages/Checkout";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./styles.css";
-import { fruits } from "data";
-
 export default function App() {
   return (
     <CartProvider>
-      <Home fruits={fruits} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </BrowserRouter>
     </CartProvider>
   );
 }

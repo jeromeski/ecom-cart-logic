@@ -22,7 +22,8 @@ const INITIAL_STATE = {
   isEmpty: true
 };
 
-const cartReducer = (state, action) => {
+const cartReducer = (newState, action) => {
+  const state = JSON.parse(JSON.stringify(newState));
   switch (action.type) {
     case "INC_QTY": {
       const items = addItemQuantity(state.items, action.item, action.qty);

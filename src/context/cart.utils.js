@@ -32,7 +32,7 @@ const removeItemQuantity = (items, product, qty) => {
 
 const getNewItemsWithTotals = (items) => {
   return items.map((item) => {
-    if (item.isVoucher) {
+    if (item.isVoucher === true) {
       return {
         ...item,
         itemTotal: item.salesPrice * item.qty
@@ -70,7 +70,9 @@ const getItemsAggregateCount = (items) => {
 };
 const getGrandTotal = (items) => {
   return items.reduce(function (total, item) {
-    return total + item.qty * item.listPrice;
+    if (item.isVoucher === true) {
+      return total + item.qty * item.salesPrice;
+    } else return total + item.qty * item.listPrice;
   }, 0);
 };
 

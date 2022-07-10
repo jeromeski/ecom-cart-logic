@@ -27,6 +27,8 @@ const CartProvider = ({ children }) => {
     // INITIAL_STATE
   );
 
+  console.log(state.items);
+
   // update local storage everytime there is change in cart
   useEffect(() => {
     saveCart(JSON.stringify(state));

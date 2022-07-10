@@ -24,7 +24,14 @@ const CheckoutItem = ({ item }) => {
               <b>{item.name}</b>
             </span>
             &nbsp;
-            <span>${item.listPrice}.00</span>
+            <span>
+              ${item.isVoucher ? item.salesPrice : item.listPrice}.00 &nbsp;{" "}
+              {item.isVoucher && (
+                <del style={{ color: "red", opacity: "0.5" }}>
+                  ${item.listPrice}.00
+                </del>
+              )}
+            </span>
             <span className="checkout-item-button-container">
               <button
                 className="checkout-item-button"
@@ -35,10 +42,9 @@ const CheckoutItem = ({ item }) => {
             </span>
             <span className="checkout-item-qty">Qty: {item.qty}</span>
           </div>
-          <button disabled={0} onClick={() => applyVoucher(item)}>
+          <button disabled={item.isVoucher} onClick={() => applyVoucher(item)}>
             Apply Voucher
           </button>
-          <pre>{JSON.stringify(item.isVoucher, 2, null)}</pre>
         </React.Fragment>
       )}
       <hr />

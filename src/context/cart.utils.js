@@ -33,7 +33,7 @@ const removeItemQuantity = (items, product, qty) => {
 const getNewItemsWithTotals = (items) => {
   return items.map((item) => ({
     ...item,
-    itemTotal: item.price * item.qty
+    itemTotal: item.listPrice * item.qty
   }));
 };
 
@@ -51,7 +51,7 @@ const addItemToCart = (items, product) => {
   if (itemIdx >= 0) {
     return noOp();
   }
-  const newProduct = { ...product, qty: 1 };
+  const newProduct = { ...product, qty: 1, shipping: 12 };
   return [...items, newProduct];
 };
 
@@ -62,11 +62,17 @@ const getItemsAggregateCount = (items) => {
 };
 const getGrandTotal = (items) => {
   return items.reduce(function (total, item) {
-    return total + item.qty * item.price;
+    return total + item.qty * item.listPrice;
   }, 0);
 };
 
 const calculateUniqueItems = (items) => items.length;
+
+const getTotalShippingFee = (items) => {
+  return items.reduce(function (total, item) {
+    return total + item.shipping;
+  }, 0);
+};
 
 export {
   addItemQuantity,
@@ -76,5 +82,6 @@ export {
   getGrandTotal,
   removeItemFromCart,
   addItemToCart,
-  calculateUniqueItems
+  calculateUniqueItems,
+  getTotalShippingFee
 };

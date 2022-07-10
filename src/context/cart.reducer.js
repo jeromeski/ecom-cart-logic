@@ -8,7 +8,8 @@ import {
   getGrandTotal,
   removeItemFromCart,
   addItemToCart,
-  calculateUniqueItems
+  calculateUniqueItems,
+  getTotalShippingFee
 } from "./cart.utils";
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
   itemsTotalCount: 0,
   uniqueItemsCount: null,
   grandTotal: 0,
+  totalShippingFee: 0,
   isEmpty: true
 };
 
@@ -52,6 +54,7 @@ const generateFinalState = (state, items) => {
     itemsTotalCount: getItemsAggregateCount(items),
     uniqueItemsCount,
     grandTotal: getGrandTotal(items),
+    totalShippingFee: getTotalShippingFee(items),
     isEmpty: uniqueItemsCount === 0
   };
 };

@@ -37,30 +37,6 @@ const CheckoutItem = ({ item }) => {
           </div>
         )}
       </div>
-      <div className="col-2">
-        <p>
-          <u>Order Summary</u>
-        </p>
-        <div className="order-summary-container">
-          <div className="order-subtotal">
-            <div>SubTotal ({itemsTotalCount} items)</div>
-            <div>${item.itemTotal}.00</div>
-          </div>
-          <div className="order-shipping">
-            <div>Shipping Fee:</div> <div>10.00</div>
-          </div>
-          <div className="order-promo">
-            <div>Promotion:</div> <div>5.00</div>
-          </div>
-          <p className="order-grandTotal">
-            <span>Total</span>{" "}
-            <span>
-              <b>${grandTotal + 10 + 5}.00</b>
-            </span>
-          </p>
-        </div>
-        <button>ORDER NOW</button>
-      </div>
     </div>
   );
 };

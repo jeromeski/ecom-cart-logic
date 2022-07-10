@@ -2,6 +2,8 @@ import { useCart } from "context/cart.context";
 import { Link, useNavigate } from "react-router-dom";
 import CheckoutItem from "components/checkout-item";
 import React, { useEffect } from "react";
+import { Dialog } from "@reach/dialog";
+import "@reach/dialog/styles.css";
 
 const Checkout = () => {
   const {
@@ -9,13 +11,24 @@ const Checkout = () => {
     itemsTotalCount,
     grandTotal,
     isEmpty,
-    totalShippingFee
+    totalShippingFee,
+    clearCart
   } = useCart();
   const navigate = useNavigate();
+
+  const [showDialog, setShowDialog] = React.useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => {
+    setShowDialog(false);
+    navigate("/");
+    clearCart();
+  };
+
   useEffect(() => {
     if (isEmpty) {
       navigate("/");
     }
+    // eslint-disable-next-line
   }, [isEmpty]);
   return (
     <React.Fragment>
@@ -54,10 +67,14 @@ const Checkout = () => {
                 </span>
               </p>
             </div>
-            <button>PLACE ORDER NOW</button>
+            <button onClick={open}>PLACE ORDER NOW</button>
           </div>
         </div>
       </div>
+      <Dialog isOpen={showDialog} onDismiss={close}>
+        <p>Thank you for purchasing!</p>
+        <button onClick={close}>BACK TO HOME</button>
+      </Dialog>
     </React.Fragment>
   );
 };

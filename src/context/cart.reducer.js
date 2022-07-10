@@ -22,8 +22,8 @@ const INITIAL_STATE = {
   isEmpty: true
 };
 
-const cartReducer = (newState, action) => {
-  const state = JSON.parse(JSON.stringify(newState));
+const cartReducer = (origState, action) => {
+  const state = JSON.parse(JSON.stringify(origState));
   switch (action.type) {
     case "INC_QTY": {
       const items = addItemQuantity(state.items, action.item, action.qty);
@@ -46,6 +46,12 @@ const cartReducer = (newState, action) => {
     case "APPLY_VOUCHER": {
       const items = applyVoucherToItem(state.items, action.item);
       return generateFinalState(state, items);
+    }
+
+    case "CLEAR_CART": {
+      return {
+        ...INITIAL_STATE
+      };
     }
     default:
       return state;

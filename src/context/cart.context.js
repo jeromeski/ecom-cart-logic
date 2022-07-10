@@ -27,8 +27,6 @@ const CartProvider = ({ children }) => {
     // INITIAL_STATE
   );
 
-  console.log(state.items);
-
   // update local storage everytime there is change in cart
   useEffect(() => {
     saveCart(JSON.stringify(state));
@@ -75,6 +73,12 @@ const CartProvider = ({ children }) => {
     });
   };
 
+  const clearCart = () => {
+    dispatch({
+      type: "CLEAR_CART"
+    });
+  };
+
   const values = useMemo(
     () => ({
       ...state,
@@ -83,7 +87,8 @@ const CartProvider = ({ children }) => {
       delItem,
       addItem,
       isInCartHandler,
-      applyVoucher
+      applyVoucher,
+      clearCart
     }),
     // eslint-disable-next-line
     [state]

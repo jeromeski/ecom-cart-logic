@@ -79,7 +79,6 @@ const getGrandTotal = (items) => {
 const calculateUniqueItems = (items) => items.length;
 
 const applyVoucherToItem = (items, product) => {
-  console.log("Fired!");
   const itemIdx = items.findIndex((c) => c.id === product.id);
   // update state
   const newItems = [
